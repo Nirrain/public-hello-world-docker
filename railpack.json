@@ -1,0 +1,30 @@
+{
+    "$schema": "https://schema.railpack.com",
+    "packages": {
+        "node": "20",
+        "python": "3.11"
+    },
+    "steps": {
+        "install": {
+            "commands": [
+                "npm install --prefix frontend",
+                "pip install -r backend/requirements.txt"
+            ]
+        },
+        "build": {
+            "inputs": [
+                {
+                    "step": "install"
+                }
+            ],
+            "commands": [
+                "npm run build --prefix frontend",
+                "rm -rf backend/frontend_dist && mkdir -p backend/frontend_dist && cp -r frontend/dist/* backend/frontend_dist/"
+            ]
+        }
+    },
+    "deploy": {
+        "startCommand": "python main.py",
+        "healthcheckPath": "/status"
+    }
+}
