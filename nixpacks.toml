@@ -1,0 +1,20 @@
+# Nixpacks configuration for FastAPI + React Monorepo
+
+[phases.setup]
+nixPkgs = ["nodejs_20", "python311"]
+
+[phases.install]
+cmds = [
+  "npm install --prefix frontend",
+  "pip install -r backend/requirements.txt"
+]
+
+[phases.build]
+dependsOn = ["install"]
+cmds = [
+  "npm run build --prefix frontend",
+  "rm -rf backend/frontend_dist && mkdir -p backend/frontend_dist && cp -r frontend/dist/* backend/frontend_dist/"
+]
+
+[start]
+cmd = "python main.py"
