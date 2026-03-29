@@ -17,7 +17,12 @@ export const fetchHello = async () => {
 }
 
 export const fetchStatus = async () => {
-    const response = await axios.get('http://localhost:8000/')
+    const response = await apiClient.get('/status')
+    return response.data
+}
+
+export const fetchUser = async () => {
+    const response = await apiClient.get('/user')
     return response.data
 }
 
